@@ -9,7 +9,7 @@ unexport CXXFLAGS
 # GLOBAL Configuration
 ################################################################################
 LOCAL_DIR ?= $(shell pwd)
-PRIV_DIR ?= priv
+PRIV_DIR ?= $(LOCAL_DIR)/priv
 CSRC_DIR ?= c_src
 CURDIR := $(shell pwd)
 BASEDIR := $(abspath $(CURDIR)/..)
@@ -119,8 +119,8 @@ COZO_HEADER_URL = $(COZO_REPOSITORY)/v$(COZO_VERSION)/$(COZO_HEADER_NAME)
 # COMPILER Configuration
 ################################################################################
 CC_FLAGS ?= -O3 -std=c99 -finline-functions -Wall -Wmissing-prototypes -I $(ERTS_INCLUDE_DIR) -L $(ERL_INTERFACE_LIB_DIR)
-CC_INCLUDE = -I $(ERL_INTERFACE_INCLUDE_DIR) -I $(LOCAL_DIR)/c_src -I $(LOCAL_DIR)/$(PRIV_DIR)
-LDLIBS = -L $(LOCAL_DIR)/c_src -L $(LOCAL_DIR)/$(PRIV_DIR)
+CC_INCLUDE = -I $(ERL_INTERFACE_INCLUDE_DIR) -I $(LOCAL_DIR)/c_src -I $(PRIV_DIR)
+LDLIBS = -L $(LOCAL_DIR)/c_src -L $(PRIV_DIR)
 CC_OPTS ?= $(CC_INCLUDE) $(LDLIBS) -Werror -lei -lcozo_c -fPIC $(CC_FLAGS) $(LDFLAGS)
 
 ################################################################################
@@ -131,9 +131,9 @@ TARGETS = $(CSRC_DIR)/cozo_c.h \
 	$(PRIV_DIR)/cozo_nif.so
 
 # Used to start rebar3 and erlang
-LD_LIBRARY_PATH ?= $(LOCAL_DIR)/$(PRIV_DIR)
+LD_LIBRARY_PATH ?= $(PRIV_DIR)
 DYLD_FALLBACK_LIBRARY_PATH ?= $(LD_LIBRARY_PATH) # for macOS
-CFLAG_RUNTIME_LIBRARY_PATH ?= $(LOCAL_DIR)/$(PRIV_DIR)
+CFLAG_RUNTIME_LIBRARY_PATH ?= $(PRIV_DIR)
 ENV_BOOTSTRAP ?= LD_LIBRARY_PATH=$(LD_LIBRARY_PATH) CFLAG_RUNTIME_LIBRARY_PATH=$(CFLAG_RUNTIME_LIBRARY_PATH)
 
 ################################################################################
@@ -225,8 +225,8 @@ ifeq ($(UNAME_SYS), Darwin)
 	@# Changes the dynamic shared library install name and rpath recorded in the
 	@# binary
 	install_name_tool -id \
-	$(LOCAL_DIR)/$(PRIV_DIR)/libcozo_c.so \
-	$(LOCAL_DIR)/$(PRIV_DIR)/libcozo_c.so
+	$(PRIV_DIR)/libcozo_c.so \
+	$(PRIV_DIR)/libcozo_c.so
 endif
 	$(CC) c_src/cozo_nif.c $(CC_OPTS) -o $(@)
 

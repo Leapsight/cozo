@@ -217,7 +217,7 @@ $(PRIV_DIR)/$(COZO_LIB_NAME): $(PRIV_DIR)/$(COZO_LIB_PACKAGE)
 	cd $(PRIV_DIR) && gunzip --keep $(COZO_LIB_PACKAGE)
 
 $(PRIV_DIR)/libcozo_c.so: $(PRIV_DIR)/$(COZO_LIB_NAME)
-	cd $(PRIV_DIR) && mv $(COZO_LIB_NAME) libcozo_c.so
+	cd $(PRIV_DIR) && ln $(COZO_LIB_NAME) libcozo_c.so
 
 $(PRIV_DIR)/cozo_nif.so: $(CSRC_DIR)/cozo_c.h $(PRIV_DIR)/libcozo_c.so
 ifeq ($(UNAME_SYS), Darwin)

@@ -1379,7 +1379,7 @@ decode_json(Message) ->
     Decoder = json_decoder(),
     try Decoder:decode(Message) of
         {ok, Decoded} -> 
-            {ok, Decoded};
+            {ok, format_decoded(Decoded)};
         {error, Error} -> 
             {error, {Error, Message}};
         Elsewise -> 
@@ -1387,6 +1387,31 @@ decode_json(Message) ->
     catch
         error:_Reason -> {error, Message}
     end.
+
+
+%%--------------------------------------------------------------------
+%% @hidden
+%% @doc Converts the maps keys to atoms for a better DX
+%% @end
+%%--------------------------------------------------------------------
+-spec format_decoded(map()) -> map().
+
+format_decoded(Map) ->
+    #{
+        <<"headers">> := Headers,
+        <<"rows">> := Rows,
+        <<"next">> := Next,
+        <<"took">> := Took,
+        <<"ok">> := OK
+    } = Map,
+
+    #{
+        headers => Headers,
+        rows => Rows,
+        next => Next,
+        took => Took,
+        ok => OK
+    }.
 
 %%--------------------------------------------------------------------
 %% @hidden

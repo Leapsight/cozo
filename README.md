@@ -132,11 +132,11 @@ you can use `cozo_db` module.
 {ok, Pid} = cozo_db:start([]).
 
 % run a query
-{ok,#{ <<"headers">> => [<<"_0">>,<<"_1">>,<<"_2">>],
-       <<"next">> => null,
-       <<"ok">> => true,
-       <<"rows">> => [[1,2,3]],
-       <<"took">> => 0.001401927
+{ok,#{ headers => [<<"_0">>,<<"_1">>,<<"_2">>],
+       next => null,
+       ok => true,
+       rows => [[1,2,3]],
+       took => 0.001401927
      }
 } = cozo_db:run(Pid, "?[] <- [[1, 2, 3]]").
 
@@ -152,11 +152,11 @@ isolation, you can use `cozo` module.
 {ok, Db} = cozo:open().
 
 % run a query
-{ok,#{ <<"headers">> => [<<"_0">>,<<"_1">>,<<"_2">>],
-       <<"next">> => null,
-       <<"ok">> => true,
-       <<"rows">> => [[1,2,3]],
-       <<"took">> => 0.001401927
+{ok,#{ headers => [<<"_0">>,<<"_1">>,<<"_2">>],
+       next => null,
+       ok => true,
+       rows => [[1,2,3]],
+       took => 0.001401927
      }
 } = cozo:run(Db, "?[] <- [[1, 2, 3]]").
 

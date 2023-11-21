@@ -328,11 +328,11 @@ close(Db)
 %% == Examples ==
 %%
 %% ```
-%% {ok, #{ <<"headers">> => [<<"_0">>,<<"_1">>,<<"_2">>]
-%%         <<"next">> => null,
-%%         <<"ok">> => true,
-%%         <<"rows">> => [[1,2,3]],
-%%         <<"took">> => 2.40886e-4}
+%% {ok, #{ headers => [<<"_0">>,<<"_1">>,<<"_2">>]
+%%         next => null,
+%%         ok => true,
+%%         rows => [[1,2,3]],
+%%         took => 2.40886e-4}
 %% } = cozo:run(0, "?[] <- [[1, 2, 3]]").
 %% '''
 %%
@@ -355,11 +355,11 @@ run(Db, Query)
 %% == Examples ==
 %%
 %% ```
-%% {ok, #{ <<"headers">> => [<<"_0">>,<<"_1">>,<<"_2">>]
-%%         <<"next">> => null,
-%%         <<"ok">> => true,
-%%         <<"rows">> => [[1,2,3]],
-%%         <<"took">> => 2.40886e-4}
+%% {ok, #{ headers => [<<"_0">>,<<"_1">>,<<"_2">>]
+%%         next => null,
+%%         ok => true,
+%%         rows => [[1,2,3]],
+%%         took => 2.40886e-4}
 %% } = cozo:run(0, "?[] <- [[1, 2, 3]]", #{}).
 %% '''
 %%
@@ -382,11 +382,11 @@ run(Db, Query, Params)
 %% == Examples ==
 %%
 %% ```
-%% {ok, #{ <<"headers">> => [<<"_0">>,<<"_1">>,<<"_2">>]
-%%         <<"next">> => null,
-%%         <<"ok">> => true,
-%%         <<"rows">> => [[1,2,3]],
-%%         <<"took">> => 2.40886e-4}
+%% {ok, #{ headers => [<<"_0">>,<<"_1">>,<<"_2">>]
+%%         next => null,
+%%         ok => true,
+%%         rows => [[1,2,3]],
+%%         took => 2.40886e-4}
 %% } = cozo:run(0, "?[] <- [[1, 2, 3]]", #{ limit => 10 }, falsex).
 %% '''
 %%
@@ -1396,22 +1396,24 @@ decode_json(Message) ->
 %%--------------------------------------------------------------------
 -spec format_decoded(map()) -> map().
 
-format_decoded(Map) ->
-    #{
+format_decoded(#{
         <<"headers">> := Headers,
         <<"rows">> := Rows,
         <<"next">> := Next,
         <<"took">> := Took,
         <<"ok">> := OK
-    } = Map,
-
+    }) ->
     #{
         headers => Headers,
         rows => Rows,
         next => Next,
         took => Took,
         ok => OK
-    }.
+    };
+
+format_decoded(#{<<"ok">> := OK}) ->
+    #{ok => OK}.
+
 
 %%--------------------------------------------------------------------
 %% @hidden

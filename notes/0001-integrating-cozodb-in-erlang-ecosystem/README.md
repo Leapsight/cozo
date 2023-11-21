@@ -1071,11 +1071,11 @@ map.
 
 ```erlang
 {ok, #{
-  <<"headers">> => [<<"_0">>,<<"_1">>,<<"_2">>],
-  <<"next">> => null,
-  <<"ok">> => true,
-  <<"rows">> => [[1,2,3]],
-  <<"took">> => 0.01818754
+  headers => [<<"_0">>,<<"_1">>,<<"_2">>],
+  next => null,
+  ok => true,
+  rows => [[1,2,3]],
+  took => 0.01818754
   }
 }
 ```
@@ -1093,11 +1093,11 @@ commands. A new relation can be created using `:create` command.
 ```erlang
 cozo:run(Db, ":create test { key: String, value: String }").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 0.038191377
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 0.038191377
 %   }
 % }
 ```
@@ -1107,11 +1107,11 @@ Rows can also be added as well with `:put` command.
 ```erlang
 cozo:run(Db, "?[key, value] <- [['key','value']] :put test {key, value}").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 0.039636681
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 0.039636681
 %   }
 % }
 ```
@@ -1121,11 +1121,11 @@ Finally, stored rows on `test` *relation* can be extracted as well.
 ```erlang
 cozo:run(Db, "?[key, value] := *test{key, value}").
 % {ok, #{
-%   <<"headers">> => [<<"key">>,<<"value">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"key">>,<<"value">>]],
-%   <<"took">> => 0.010064009
+%   headers => [<<"key">>,<<"value">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"key">>,<<"value">>]],
+%   took => 0.010064009
 %   }
 % }
 ```
@@ -1145,17 +1145,17 @@ Payload = #{ <<"relations">> => [<<"test">>] },
 % {ok, #{
 %   <<"data">> => #{
 %     <<"test">> => #{
-%       <<"headers">> => [
+%       headers => [
 %         <<"key">>,
 %         <<"value">>
 %       ],
-%       <<"next">> => null,
-%       <<"rows">> => [
+%       next => null,
+%       rows => [
 %         [<<"key">>,<<"value">>]
 %       ]
 %     }
 %   },
-%   <<"ok">> => true
+%   ok => true
 %  }
 % }
 ```
@@ -1168,7 +1168,7 @@ the field `<<"data">>`and reinject them.
 #{ <<"data">> := Import } = Result.
 {ok, _} = cozo:import_relations(Db, Import).
 % {ok, #{
-%   <<"ok">> => true
+%   ok => true
 %   }
 % }
 ```
@@ -1212,11 +1212,11 @@ back.
 {ok, _} = cozo:restore(DbRestore, "/tmp/data.dump").
 cozo:run(4, "?[key, value] := *test{key, value}").
 % {ok, #{
-%   <<"headers">> => [<<"key">>,<<"value">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"key">>,<<"value">>]],
-%   <<"took">> => 1.97193e-4
+%   headers => [<<"key">>,<<"value">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"key">>,<<"value">>]],
+%   took => 1.97193e-4
 %   }
 % }
 ```
@@ -1261,7 +1261,7 @@ function, still returned as map structure from JSON object.
 ```erlang
 {ok, Relations} = cozo:list_relations(Db).
 % {ok, #{
-%   <<"headers">> => [
+%   headers => [
 %     <<"name">>,
 %     <<"arity">>,
 %     <<"access_level">>,
@@ -1272,14 +1272,14 @@ function, still returned as map structure from JSON object.
 %     <<"n_replace_triggers">>,
 %     <<"description">>
 %   ],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [
+%   next => null,
+%   ok => true,
+%   rows => [
 %     [<<"managing_relation3">>,3,<<"normal">>,3,0,0,0,0,<<>>],
 %     [<<"managing_relations">>,2,<<"normal">>,1,1,0,0,0,<<>>],
 %     [<<"managing_relations2">>,2,<<"normal">>,1,1,0,0,0,<<>>]
 %   ],
-%   <<"took">> => 6.6139e-5
+%   took => 6.6139e-5
 %   }
 % }
 ```
@@ -1290,21 +1290,21 @@ Finally, relations can be removed using `cozo:delete_relation/2` or
 ```erlang
 {ok, _} = cozo:delete_relation(Db, "managing_relation3").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 2.21824e-4
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 2.21824e-4
 %   }
 % }
 
 {ok, _} = cozo:delete_relations(Db, ["managing_relations", "managing_relations2"]).
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 5.7769e-5
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 5.7769e-5
 %   }
 % }
 ```
@@ -1338,21 +1338,21 @@ All indexes can be listed on a *relation* using `cozo:list_indices/2`.
 ```erlang
 {ok, _} = cozo:list_indices(Db, "managing_index").
 % {ok, #{
-%   <<"headers">> => [
+%   headers => [
 %     <<"name">>,
 %     <<"type">>,
 %     <<"relations">>,
 %     <<"config">>
 %   ],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [
+%   next => null,
+%   ok => true,
+%   rows => [
 %     [ <<"index">>,<<"normal">>,
 %       [<<"managing_index:index">>],
 %       #{<<"indices">> => [0]}
 %     ]
 %   ],
-%   <<"took">> => 7.0669e-5
+%   took => 7.0669e-5
 %   }
 % }
 ```
@@ -1363,11 +1363,11 @@ function.
 ```erlang
 {ok, _} = cozo:delete_index(Db, "managing_index:index").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 8.5379e-5
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 8.5379e-5
 %   }
 % }
 ```
@@ -1389,21 +1389,21 @@ Two relations are created, `store` will received new data and
 ```erlang
 {ok, _} = cozo:create_relation(Db, "store", "key => value").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 1.12455e-4
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 1.12455e-4
 %   }
 % }
 
 {ok, _} = cozo:create_relation(Db, "replica", "key => value").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 1.16418e-4
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 1.16418e-4
 %   }
 % }
 ```
@@ -1418,11 +1418,11 @@ Trigger = "on put { "
   ":put replica{k,v} }".
 {ok, _} = cozo:set_triggers(Db, "store", Trigger).
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 1.5311e-4
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 1.5311e-4
 %   }
 % }
 ```
@@ -1433,21 +1433,21 @@ To be sure each relations are empty, a query can be executed with
 ```erlang
 {ok, _} = cozo:run(Db, "?[key, value] := *store[key, value]").
 % {ok, #{
-%   <<"headers">> => [<<"key">>,<<"value">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [],
-%   <<"took">> => 1.81164e-4
+%   headers => [<<"key">>,<<"value">>],
+%   next => null,
+%   ok => true,
+%   rows => [],
+%   took => 1.81164e-4
 %   }
 % }
 
 {ok, _} = cozo:run(Db, "?[key, value] := *replace[key, value]").
 % {ok, #{
-%   <<"headers">> => [<<"key">>,<<"value">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [],
-%   <<"took">> => 1.69025e-4
+%   headers => [<<"key">>,<<"value">>],
+%   next => null,
+%   ok => true,
+%   rows => [],
+%   took => 1.69025e-4
 %   }
 % }
 ```
@@ -1458,31 +1458,31 @@ into `replica` *relation* as well.
 ```erlang
 cozo:run(Db, "?[key, value] <- [[1,2],[2,3]] :put store{key, value}").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 6.91881e-4
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 6.91881e-4
 %   }
 % }
 
 cozo:run(Db, "?[key, value] := *store[key, value]").
 % {ok, #{
-%   <<"headers">> => [<<"key">>,<<"value">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[1,2],[2,3]],
-%   <<"took">> => 6.1221e-4
+%   headers => [<<"key">>,<<"value">>],
+%   next => null,
+%   ok => true,
+%   rows => [[1,2],[2,3]],
+%   took => 6.1221e-4
 %   }
 % }
 
 cozo:run(Db, "?[key, value] := *replica[key, value]").
 % {ok, #{
-%   <<"headers">> => [<<"key">>,<<"value">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[1,2],[2,3]],
-%   <<"took">> => 3.38856e-4
+%   headers => [<<"key">>,<<"value">>],
+%   next => null,
+%   ok => true,
+%   rows => [[1,2],[2,3]],
+%   took => 3.38856e-4
 %   }
 % }
 ```
@@ -1492,13 +1492,13 @@ Triggers can be checked using `cozo:get_triggers/2`.
 ```erlang
 {ok, _ } = cozo:get_triggers(Db, "store").
 % {ok,#{
-%   <<"headers">> => [<<"type">>,<<"idx">>,<<"trigger">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [
+%   headers => [<<"type">>,<<"idx">>,<<"trigger">>],
+%   next => null,
+%   ok => true,
+%   rows => [
 %   [<<"put">>,0,
 %    <<"?[key,value] := _new[key,value]; :put replica{key,value} ">>]],
-%   <<"took">> => 4.8507e-5
+%   took => 4.8507e-5
 %   }
 % }
 ```
@@ -1509,11 +1509,11 @@ Finally, triggers can be reset or deleted using
 ```erlang
 {ok, _} = cozo:delete_triggers(Db, "store").
 % {ok, #{
-%   <<"headers">> => [<<"status">>],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [[<<"OK">>]],
-%   <<"took">> => 1.38564e-4
+%   headers => [<<"status">>],
+%   next => null,
+%   ok => true,
+%   rows => [[<<"OK">>]],
+%   took => 1.38564e-4
 %   }
 % }
 ```
@@ -1528,20 +1528,20 @@ releases. Columns definition can be listed using
 ```erlang
 {ok, _ } = cozo:list_columns(Db, "managing_index").
 % {ok, #{
-%   <<"headers">> => [
+%   headers => [
 %     <<"column">>,
 %     <<"is_key">>,
 %     <<"index">>,
 %     <<"type">>,
 %     <<"has_default">>
 %   ],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [
+%   next => null,
+%   ok => true,
+%   rows => [
 %     [<<"key">>,true,0,<<"Any?">>,false],
 %     [<<"value">>,false,1,<<"Any?">>,false]
 %   ],
-%   <<"took">> => 6.2358e-5
+%   took => 6.2358e-5
 %   }
 % }
 ```
@@ -1551,7 +1551,7 @@ Queries can also be explained using `cozo:explain/2`.
 ```erlang
 cozo:explain(Db, "?[] <- [[1,2,3]]").
 % {ok, #{
-%   <<"headers">> => [
+%   headers => [
 %     <<"stratum">>,
 %     <<"rule_idx">>,
 %     <<"rule">>,
@@ -1562,12 +1562,12 @@ cozo:explain(Db, "?[] <- [[1,2,3]]").
 %     <<"filters/expr">>,
 %     <<"out_relation">>
 %   ],
-%   <<"next">> => null,
-%   <<"ok">> => true,
-%   <<"rows">> => [
+%   next => null,
+%   ok => true,
+%   rows => [
 %     [0,0,<<"?">>,0,<<"algo">>,null,null,null,null]
 %   ],
-%   <<"took">> => 1.43279e-4
+%   took => 1.43279e-4
 %   }
 % }
 ```
